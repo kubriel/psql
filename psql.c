@@ -1,4 +1,4 @@
-</* [psql] - A PostgreSQL client for PD
+/* [psql] - A PostgreSQL client for PD
  *
  * Copyright (C) 2006 Jamie Bullock and others
  *
