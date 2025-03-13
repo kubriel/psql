@@ -1,4 +1,4 @@
-/* [psql] - A PostgreSQL client for PD
+</* [psql] - A PostgreSQL client for PD
  *
  * Copyright (C) 2006 Jamie Bullock and others
  *
@@ -42,6 +42,7 @@
 #define PGDATE 1082  
 #define PGDATETIME 1184
 #define PGVARCHAR 1043
+#define PGINTERVAL 1186
 
 typedef struct psql{ 
 
@@ -66,7 +67,7 @@ typedef struct psql{
 static void psql_SQL (t_psql *x, t_symbol *s){ 
 
     char sqlString[MAXPDSTRING];  
-    int argc = 10;
+    int argc = 15;
     t_atom argv[argc];
     t_atom *test;
     int descriptor_fnum;
@@ -131,7 +132,7 @@ static void psql_SQL (t_psql *x, t_symbol *s){
                             SETFLOAT(&argv[j+1], (float) atoi(PQgetvalue(res, i, j)));
                         else if (fType == PGFLOAT8 || fType == PGDOUBLE)
                             SETFLOAT(&argv[j+1], (float) atof(PQgetvalue(res, i, j)));
-                        else if (fType == PGVARCHAR || fType == PGDATE || fType == PGDATETIME)
+                        else if (fType == PGVARCHAR || fType == PGDATE || fType == PGDATETIME || fType == PGINTERVAL)
                         {
                             t_sym = gensym( PQgetvalue(res, i, j));
                             SETSYMBOL(&argv[j+1], t_sym);
@@ -164,7 +165,6 @@ static void psql_anything(t_psql *x, t_symbol *s, int ac, t_atom *av, t_floatarg
     char sqlString[MAXPDSTRING]; 
     int i;
     char buf[MAXPDSTRING];
-    char mybuf[MAXPDSTRING];
 
     if(!strcmp(s->s_name,"close") && !x->in_query)
         psql_close(x);
